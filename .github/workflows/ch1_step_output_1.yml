@@ -18,3 +18,15 @@
         name: Run tests
         run: |
           echo "Random ID: ${{ steps.generate-random-id.outputs.random_id }}"
+    test-job2:
+      needs: test-job
+      runs-on: ubuntu-latest
+      steps:
+        - name: echoSystem
+          run: echo "current : $PWD"
+        - id: hello
+          name: generate name
+          run: echo "name=$RANDOM-name" >> "$GITHUB_OUTPUT"
+        - id: say
+          name: hello-to
+          run: echo "hello ${{ steps.hello.outputs.name }} world"
